@@ -2,7 +2,8 @@ import React, {useState, useEffect} from 'react'
 
 const Register = ({ login }) => {
     const [users, setUsers] = useState({
-        name: "",
+        firstName: "",
+        lastName: "",
         email: "",
         username: "",
         password: "",
@@ -36,8 +37,13 @@ const Register = ({ login }) => {
             <h2>Sign-Up Form </h2>
             <form onSubmit={handleSubmit}>
                     <div className='form-group'>
-                        <label htmlFor='name'>Full Name</label>
-                        <input type="text" name="name" id='name' onChange={handleChange} value={users.name} placeholder="Enter Full Name"/>
+                        <label htmlFor='irstName'>First Name</label>
+                        <input type="text" name="firstName" id='firstName' onChange={handleChange} value={users.firstName} placeholder="Enter First Name"/>
+                    </div>
+                    <div className='form-group'>
+                        <label htmlFor='n
+                        lastName'>Last Name</label>
+                        <input type="text" name="lastName" id='lastName' onChange={handleChange} value={users.lastName} placeholder="Enter Last Name"/>
                     </div>
                     <div className='form-group'>
                         <label htmlFor='email'>Email Address</label>
