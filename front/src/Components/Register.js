@@ -9,6 +9,7 @@ const Register = ({ login }) => {
         password: "",
         cpassword: ""
     })
+    const url = "https://localhost/4000/register"
 
     const handleChange =(e) => {
         const {name, value} = e.target
@@ -25,6 +26,9 @@ const Register = ({ login }) => {
         console.log(users)
         if(users.password === users.cpassword){
             console.log("Valid Connection")
+            axios.post(url)
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
             login(true)
         }else{
             console.log("Bad Connection")
@@ -37,12 +41,11 @@ const Register = ({ login }) => {
             <h2>Sign-Up Form </h2>
             <form onSubmit={handleSubmit}>
                     <div className='form-group'>
-                        <label htmlFor='irstName'>First Name</label>
+                        <label htmlFor='firstName'>First Name</label>
                         <input type="text" name="firstName" id='firstName' onChange={handleChange} value={users.firstName} placeholder="Enter First Name"/>
                     </div>
                     <div className='form-group'>
-                        <label htmlFor='n
-                        lastName'>Last Name</label>
+                        <label htmlFor='lastName'>Last Name</label>
                         <input type="text" name="lastName" id='lastName' onChange={handleChange} value={users.lastName} placeholder="Enter Last Name"/>
                     </div>
                     <div className='form-group'>
