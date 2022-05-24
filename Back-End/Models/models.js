@@ -8,7 +8,8 @@ const signUpTemplate = new mongoose.Schema({
         required: true
     },
     lastName:{
-        type: String
+        type: String,
+        required: true
     },
     userName:{
         type : String,

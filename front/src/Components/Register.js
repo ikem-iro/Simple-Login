@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import axios from 'axios'
 
 const Register = ({ login }) => {
     const [users, setUsers] = useState({
@@ -9,7 +10,7 @@ const Register = ({ login }) => {
         password: "",
         cpassword: ""
     })
-    const url = "https://localhost/4000/register"
+    const url = "http://localhost:4000/app/Register"
 
     const handleChange =(e) => {
         const {name, value} = e.target
@@ -26,10 +27,11 @@ const Register = ({ login }) => {
         console.log(users)
         if(users.password === users.cpassword){
             console.log("Valid Connection")
-            axios.post(url)
+            axios.post(url, users)
             .then(res => console.log(res))
             .catch(err => console.log(err))
-            login(true)
+            // login(true)
+            // window.location.href = "/dashboard"
         }else{
             console.log("Bad Connection")
             login(false)
