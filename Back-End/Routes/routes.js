@@ -21,8 +21,8 @@ router.route("/Register")
     try{
          bcrypt.hash(req.body.password, saltRounds, (err,hash)=>{
             const user = new signUpTemplateCopy({
-                firstName : req.body.firstname,
-                lastName : req.body.lastname,
+                firstName : req.body.firstName,
+                lastName : req.body.lastName,
                 userName : req.body.username,
                 email : req.body.email,
                 password : hash

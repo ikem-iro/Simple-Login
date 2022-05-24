@@ -1,13 +1,16 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
+import axios from 'axios'
 
 const Register = ({ login }) => {
     const [users, setUsers] = useState({
-        name: "",
+        firstName: "",
+        lastName: "",
         email: "",
         username: "",
         password: "",
         cpassword: ""
     })
+    const url = "http://localhost:4000/app/Register"
 
     const handleChange =(e) => {
         const {name, value} = e.target
@@ -24,7 +27,11 @@ const Register = ({ login }) => {
         console.log(users)
         if(users.password === users.cpassword){
             console.log("Valid Connection")
-            login(true)
+            axios.post(url, users)
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
+            // login(true)
+            // window.location.href = "/dashboard"
         }else{
             console.log("Bad Connection")
             login(false)
@@ -36,8 +43,12 @@ const Register = ({ login }) => {
             <h2>Sign-Up Form </h2>
             <form onSubmit={handleSubmit}>
                     <div className='form-group'>
-                        <label htmlFor='name'>Full Name</label>
-                        <input type="text" name="name" id='name' onChange={handleChange} value={users.name} placeholder="Enter Full Name"/>
+                        <label htmlFor='firstName'>First Name</label>
+                        <input type="text" name="firstName" id='firstName' onChange={handleChange} value={users.firstName} placeholder="Enter First Name"/>
+                    </div>
+                    <div className='form-group'>
+                        <label htmlFor='lastName'>Last Name</label>
+                        <input type="text" name="lastName" id='lastName' onChange={handleChange} value={users.lastName} placeholder="Enter Last Name"/>
                     </div>
                     <div className='form-group'>
                         <label htmlFor='email'>Email Address</label>
@@ -62,4 +73,4 @@ const Register = ({ login }) => {
   )
 }
 
-export default Register;
+export default Register

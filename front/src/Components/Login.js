@@ -1,10 +1,12 @@
 import React, {useState} from 'react'
+import axios from 'axios'
 
 const Login = ({ login }) => {
     const [loginUser, setLoginUser] = useState({
         username: "",
         password: ""
     })
+    const url = "http://localhost:4000/app/Login"
 
     const handleChange = (e) => {
         const {name, value} = e.target
@@ -19,7 +21,9 @@ const Login = ({ login }) => {
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log(loginUser)
-        login(true)
+        axios.post(url, loginUser)
+        .then(res => console.log(res))
+        .catch((err) => console.log(err))
     }
   return (
     <div className='body'>
