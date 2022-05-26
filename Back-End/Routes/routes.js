@@ -67,16 +67,16 @@ router.route('/Login')
                 if (err) {
                     console.log(err);
                 } else if (!foundUser) {
-                    res.json({message : "User does not exist"});
+                    res.send({message : "User does not exist"});
                 } else {
                     if (foundUser) {
                         bcrypt.compare(password, foundUser.password, (err, result) => {
                             if (result === true) {
-                                res.json({message : "Username and password match"})
+                                res.send({message : "Username and password match"})
                                 console.log("Logged in successfully");
                                 
                             } else {
-                                res.json({message : "Wrong username or password"})
+                                res.send({message : "Wrong username or password"})
                                 console.log("Wrong username or password");
                             }
                         })
