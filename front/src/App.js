@@ -9,20 +9,25 @@ import Footer from './Components/Footer';
 import Home from './Components/Home';
 
 function App() {
-  const [userLogged, setUserLogged] = useState(true)
+  const [userLogged, setUserLogged] = useState(false)
+  const [userName, setUserName] = useState({
+    
+  })
 
   const setLogin = (bool) => {
     setUserLogged(bool)
   }
+  console.log(userLogged)
+  console.log(userName)
   return (
     <div className="App">
       <Router>
         <Navbar />
         <Routes>
-          <Route path='/' element={<Dashboard />}/>  
-          <Route path='/home' element={<Home/>}/>
+          {!userLogged && <Route path='/' element={<Dashboard />}/>} 
+          {userLogged && <Route path='/' element={<Home  name={userName} />}/> } 
           <Route path='/signup' element={<Register login={setLogin}/>}/>
-          <Route path='/login' element={<Login login={setLogin}/>}/>
+          <Route path='/login' element={<Login login={setLogin} user={setUserName}/>}/>
         </Routes>
         <Footer />
       </Router>

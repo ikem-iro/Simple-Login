@@ -1,9 +1,10 @@
 import React from 'react'
 
-const Home = () => {
+const Home = ({ name }) => {
+  console.log(name)
   return (
-    <div>
-        <h2>Home</h2>
+    <div className='home'>
+        <h2>Welcome to my Humble Abode {name.firstName} {name.lastName}</h2>
     </div>
   )
 }

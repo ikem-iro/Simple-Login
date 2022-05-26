@@ -12,13 +12,9 @@ const {
 
 const saltRounds = 10;
 
-router.route('/')
-    .get((req, res) => {
-        res.send("Hello World");
-    })
-
 router.route("/Register")
-    .get((req, res) => {
+
+.get((req, res) => {
 
     })
     .post(async (req, res, next) => {
@@ -50,6 +46,38 @@ router.route("/Register")
             }
             next(error);
 
+    .get((req, res) => {
+
+    })
+    .post(async (req, res, next) => {
+        try {
+            bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
+                const user = new signUpTemplateCopy({
+                    firstName: req.body.firstname,
+                    lastName: req.body.lastname,
+                    userName: req.body.username,
+                    email: req.body.email,
+                    password: hash
+                });
+
+                user.save();
+                console.log(user);
+
+                const createdUser = user;
+                res.json({
+                    username: createdUser.userName,
+                    firstName: createdUser.firstName,
+                    lastName: createdUser.lastName
+                })
+
+            })
+
+        } catch (error) {
+            if (error.constructor.name === 'ValidationError') {
+                res.status(422);
+            }
+            next(error);
+ main
         }
 
     })
@@ -60,6 +88,27 @@ router.route('/Login')
         try {
             const username = req.body.username;
             const password = req.body.password;
+
+
+    UserData.findOne({
+                userName: username
+            }, (err, foundUser) => {
+                if (err) {
+                    console.log(err);
+                } else if (!foundUser) {
+                    res.send({message : "User does not exist"});
+                } else {
+                    if (foundUser) {
+                        bcrypt.compare(password, foundUser.password, (err, result) => {
+                            if (result === true) {
+                                res.send({message : "Username and password match" , user : foundUser})
+                                console.log("Logged in successfully");
+                                
+                            } else {
+                                res.send({message : "Wrong username or password"})
+                                console.log("Wrong username or password");
+                            }
+                        })
 
             UserData.findOne({
                 userName: username
@@ -72,7 +121,7 @@ router.route('/Login')
                     if (foundUser) {
                         bcrypt.compare(password, foundUser.password, (err, result) => {
                             if (result === true) {
-                                res.send({message : "Username and password match"})
+                                res.send({message : "Username and password match" , user : foundUser})
                                 console.log("Logged in successfully");
                                 
                             } else {
