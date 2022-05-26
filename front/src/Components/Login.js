@@ -1,7 +1,10 @@
 import React, {useState} from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
-const Login = ({ login }) => {
+
+const Login = ({ login, user }) => {
+    const navigate = useNavigate()
     const [loginUser, setLoginUser] = useState({
         username: "",
         password: ""
@@ -22,8 +25,10 @@ const Login = ({ login }) => {
         e.preventDefault()
         console.log(loginUser)
         axios.post(url, loginUser)
-        .then(res => console.log(res))
+        .then(res => user(res.data.user))
         .catch((err) => console.log(err))
+        login(true)
+        navigate("/")
     }
   return (
     <div className='body'>

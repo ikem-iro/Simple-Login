@@ -27,10 +27,15 @@ router.route("/Register")
                 email : req.body.email,
                 password : hash
             });
+            user.save();
             console.log(user);
-        const createdUser = user.save();
-        
-        res.json(createdUser);
+
+            const createdUser = user;
+            res.json({
+                username: createdUser.userName,
+                firstName: createdUser.firstName,
+                lastName: createdUser.lastName
+            })
         
         })
         
@@ -60,10 +65,12 @@ router.route('/Login')
         else{
             if (foundUser){
                 bcrypt.compare(password, foundUser.password, (err, result)=>{
-                    if(result ===true){
+                    if(result === true){
                         console.log("Logged in successfully");
+                        res.send({message:"login sucess",user:foundUser,})
                     }else{
                         console.log("Wrong username or password");
+                        res.send({message:"wrong credentials"})
                     }
                 } )
             }
