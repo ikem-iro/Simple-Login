@@ -10,6 +10,7 @@ const {
     default: mongoose
 } = require('mongoose');
 
+
 const saltRounds = 10;
 
 
@@ -18,10 +19,10 @@ router.route("/Register")
         try {
             bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
                 const user = new signUpTemplateCopy({
-                    firstName: req.body.firstname,
-                    lastName: req.body.lastname,
-                    userName: req.body.username,
-                    email: req.body.email,
+                    firstName: (req.body.firstname).toLowerCase(),
+                    lastName: (req.body.lastname).toLowerCase(),
+                    userName: (req.body.username).toLowerCase(),
+                    email: (req.body.email).toLowerCase(),
                     password: hash
                 });
 
@@ -51,7 +52,7 @@ router.route("/Register")
 router.route('/Login')
     .post(async (req, res, next) => {
         try {
-            const username = req.body.username;
+            const username = (req.body.username).toLowerCase();
             const password = req.body.password;
 
             UserData.findOne({userName: username}, (err, foundUser) => {
@@ -63,7 +64,7 @@ router.route('/Login')
                     if (foundUser) {
                         bcrypt.compare(password, foundUser.password, (err, result) => {
                             if (result === true) {
-                                res.send({message : "Username and password match", user : foundUser})
+                                res.send({message : "Username and password match", user : {firstName : foundUser.firstName, lastName : foundUser.lastName}});
                                 console.log("Logged in successfully");
                                 
                             } else {
