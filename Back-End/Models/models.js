@@ -1,5 +1,7 @@
 
 const mongoose = require('mongoose');
+const passport = require('passport');
+const passportLocalMongoose = require('passport-local-mongoose');
 
 
 const signUpTemplate = new mongoose.Schema({
@@ -11,9 +13,9 @@ const signUpTemplate = new mongoose.Schema({
         type: String,
         required: true
     },
-    userName:{
+    username:{
         type : String,
-        required : true
+      
     },
     email:{
         type:String,
@@ -21,13 +23,19 @@ const signUpTemplate = new mongoose.Schema({
     },
     password:{
         type: String,
-        required: true   
+    
     }
 },
 {
     timestamps:true
 });
 
-const UserData = mongoose.model('UserData',signUpTemplate);
+signUpTemplate.plugin(passportLocalMongoose);
+
+
+const UserData = mongoose.model('userdata',signUpTemplate);
+passport.use(UserData.createStrategy());
+passport.serializeUser(UserData.serializeUser());
+passport.deserializeUser(UserData.deserializeUser());
 
 module.exports = UserData;
